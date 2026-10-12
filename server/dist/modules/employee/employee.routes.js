@@ -1,0 +1,25 @@
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+const express_1 = require("express");
+const employee_controller_js_1 = require("./employee.controller.js");
+const auth_js_1 = require("../../middleware/auth.js");
+const rbac_js_1 = require("../../middleware/rbac.js");
+const router = (0, express_1.Router)();
+router.use(auth_js_1.authenticate);
+// Specific routes before param :id
+router.get('/ess/summary', employee_controller_js_1.getEssSummary);
+router.get('/expiries', (0, rbac_js_1.requireRole)(['HR_DIRECTOR', 'HR_MANAGER', 'DEPT_MANAGER', 'ORG_ADMIN', 'PLATFORM_SUPER_ADMIN']), employee_controller_js_1.getEmployeeExpiries);
+router.get('/documents/expiring', (0, rbac_js_1.requireRole)(['HR_DIRECTOR', 'HR_MANAGER', 'ORG_ADMIN', 'PLATFORM_SUPER_ADMIN', 'AUDITOR']), employee_controller_js_1.getDocumentExpiries);
+router.get('/announcements', employee_controller_js_1.getAnnouncements);
+router.post('/announcements', (0, rbac_js_1.requireRole)(['HR_DIRECTOR', 'HR_MANAGER', 'ORG_ADMIN']), employee_controller_js_1.createAnnouncement);
+router.get('/company-calendar', employee_controller_js_1.getCompanyCalendar);
+router.post('/import', (0, rbac_js_1.requireRole)(['HR_DIRECTOR', 'HR_MANAGER', 'ORG_ADMIN', 'PLATFORM_SUPER_ADMIN']), employee_controller_js_1.importEmployees);
+router.get('/checklists/:employeeId', employee_controller_js_1.getEmployeeChecklists);
+router.patch('/checklists/:itemId/toggle', employee_controller_js_1.toggleChecklistItem);
+router.get('/', employee_controller_js_1.getEmployees);
+router.get('/:id', employee_controller_js_1.getEmployeeById);
+router.post('/', (0, rbac_js_1.requireRole)(['HR_DIRECTOR', 'HR_MANAGER', 'HR_OFFICER', 'ORG_ADMIN']), employee_controller_js_1.createEmployee);
+router.patch('/:id', (0, rbac_js_1.requireRole)(['HR_DIRECTOR', 'HR_MANAGER', 'ORG_ADMIN']), employee_controller_js_1.updateEmployee);
+router.delete('/:id', (0, rbac_js_1.requireRole)(['HR_DIRECTOR', 'HR_MANAGER', 'ORG_ADMIN', 'PLATFORM_SUPER_ADMIN']), employee_controller_js_1.deleteEmployee);
+router.post('/:id/documents', (0, rbac_js_1.requireRole)(['HR_DIRECTOR', 'HR_MANAGER', 'ORG_ADMIN', 'PLATFORM_SUPER_ADMIN']), employee_controller_js_1.addEmployeeDocument);
+exports.default = router;

@@ -1,0 +1,14 @@
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+const express_1 = require("express");
+const system_controller_js_1 = require("./system.controller.js");
+const auth_js_1 = require("../../middleware/auth.js");
+const rbac_js_1 = require("../../middleware/rbac.js");
+const router = (0, express_1.Router)();
+router.use(auth_js_1.authenticate);
+router.get('/action-center', system_controller_js_1.getActionCenterSummary);
+router.get('/health-check', (0, rbac_js_1.requireRole)(['PLATFORM_SUPER_ADMIN', 'ORG_ADMIN', 'HR_DIRECTOR', 'HR_MANAGER', 'AUDITOR']), system_controller_js_1.getCompanyHrHealthCheck);
+router.post('/backup', (0, rbac_js_1.requireRole)(['PLATFORM_SUPER_ADMIN', 'ORG_ADMIN', 'HR_DIRECTOR']), system_controller_js_1.createBackupSnapshot);
+router.post('/restore', (0, rbac_js_1.requireRole)(['PLATFORM_SUPER_ADMIN', 'ORG_ADMIN']), system_controller_js_1.restoreBackupSnapshot);
+router.get('/security-audit', (0, rbac_js_1.requireRole)(['PLATFORM_SUPER_ADMIN', 'ORG_ADMIN', 'HR_DIRECTOR', 'AUDITOR']), system_controller_js_1.getSecurityAuditSummary);
+exports.default = router;

@@ -1,0 +1,252 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  /* High-Contrast Corporate Light Mode Design Tokens */
+  --hcm-bg: #f8fafc;
+  --hcm-surface: #ffffff;
+  --hcm-card: #ffffff;
+  --hcm-elevated: #f1f5f9;
+  --hcm-input: #ffffff;
+  --hcm-border: #e2e8f0;
+  --hcm-border-subtle: #f1f5f9;
+  --hcm-hover: #f1f5f9;
+  --hcm-red: #ff6f32;
+  --hcm-red-hover: #ea580c;
+  --hcm-red-subtle: rgba(255, 111, 50, 0.1);
+  --hcm-text: #0f172a;
+  --hcm-text-secondary: #334155;
+  --hcm-text-muted: #64748b;
+}
+
+html.dark {
+  /* Rich Deep Enterprise Dark Theme Design Tokens */
+  --hcm-bg: #051720;
+  --hcm-surface: #071c26;
+  --hcm-card: #08222f;
+  --hcm-elevated: #0a2736;
+  --hcm-input: #051822;
+  --hcm-border: #14425b;
+  --hcm-border-subtle: #0e3547;
+  --hcm-hover: #0c2f42;
+  --hcm-red: #ff6f32;
+  --hcm-red-hover: #ea580c;
+  --hcm-red-subtle: rgba(255, 111, 50, 0.12);
+  --hcm-text: #f8fafc;
+  --hcm-text-secondary: #cbd5e1;
+  --hcm-text-muted: #94a3b8;
+}
+
+@layer base {
+  html {
+    scroll-behavior: smooth;
+    color-scheme: dark;
+  }
+  html:not(.dark) {
+    color-scheme: light;
+  }
+  body {
+    background-color: var(--hcm-bg);
+    color: var(--hcm-text);
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+  ::selection {
+    background-color: rgba(255, 111, 50, 0.35);
+    color: #ffffff;
+  }
+}
+
+/* RTL & Urdu Typography */
+[dir="rtl"] {
+  text-align: right;
+}
+[dir="rtl"] .rtl-mirror {
+  transform: scaleX(-1);
+}
+.font-urdu {
+  font-family: 'Noto Nastaliq Urdu', 'Jameel Noori Nastaleeq', 'Segoe UI', Tahoma, Arial, sans-serif;
+  letter-spacing: normal;
+  line-height: 1.7;
+}
+
+/* Accessible focus ring */
+:focus-visible {
+  outline: 2px solid #ff6f32;
+  outline-offset: 2px;
+}
+
+/* Custom scrollbars */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+::-webkit-scrollbar-track {
+  background: var(--hcm-surface);
+}
+::-webkit-scrollbar-thumb {
+  background: var(--hcm-border);
+  border-radius: 3px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #1e5675;
+}
+
+/* Light Mode Overrides for Hardcoded Theme Classes */
+html:not(.dark) [class*="bg-[#051720]"],
+html:not(.dark) [class*="bg-[#051822]"],
+html:not(.dark) [class*="bg-navy-950"] {
+  background-color: #f8fafc !important;
+}
+
+html:not(.dark) [class*="bg-[#071c26]"],
+html:not(.dark) [class*="bg-navy-900"] {
+  background-color: #ffffff !important;
+}
+
+html:not(.dark) [class*="bg-[#08222f]"],
+html:not(.dark) [class*="bg-[#0a2432]"],
+html:not(.dark) [class*="bg-[#0a2736]"],
+html:not(.dark) [class*="bg-navy-850"],
+html:not(.dark) [class*="bg-navy-800"] {
+  background-color: #ffffff !important;
+}
+
+html:not(.dark) [class*="bg-[#0c2f42]"],
+html:not(.dark) [class*="bg-[#071c26]/60"],
+html:not(.dark) [class*="hover:bg-[#071c26]"]:hover,
+html:not(.dark) [class*="hover:bg-[#0c2f42]"]:hover {
+  background-color: #f1f5f9 !important;
+}
+
+html:not(.dark) [class*="border-[#14425b]"],
+html:not(.dark) [class*="border-[#0e3547]"],
+html:not(.dark) [class*="border-[#0f3446]"],
+html:not(.dark) [class*="divide-[#14425b]"] > * {
+  border-color: #e2e8f0 !important;
+}
+
+html:not(.dark) [class*="text-white"]:not([class*="bg-[#ff6f32]"]):not([class*="bg-brand-500"]):not(.text-white-force) {
+  color: #0f172a !important;
+}
+
+html:not(.dark) [class*="text-slate-100"] {
+  color: #0f172a !important;
+}
+
+html:not(.dark) [class*="text-slate-200"],
+html:not(.dark) [class*="text-slate-300"] {
+  color: #334155 !important;
+}
+
+html:not(.dark) [class*="text-slate-400"] {
+  color: #64748b !important;
+}
+
+html:not(.dark) input,
+html:not(.dark) select,
+html:not(.dark) textarea {
+  color: #0f172a !important;
+  background-color: #ffffff !important;
+  border-color: #cbd5e1 !important;
+}
+
+html:not(.dark) input::placeholder,
+html:not(.dark) textarea::placeholder {
+  color: #94a3b8 !important;
+}
+
+html:not(.dark) button[class*="bg-[#ff6f32]"],
+html:not(.dark) button[class*="bg-brand-500"],
+html:not(.dark) a[class*="bg-[#ff6f32]"],
+html:not(.dark) .btn-brand,
+html:not(.dark) [class*="bg-[#ff6f32]"] span,
+html:not(.dark) [class*="bg-[#ff6f32]"] svg {
+  color: #ffffff !important;
+}
+
+html:not(.dark) ::-webkit-scrollbar-track {
+  background: #f1f5f9;
+}
+html:not(.dark) ::-webkit-scrollbar-thumb {
+  background: #cbd5e1;
+}
+html:not(.dark) ::-webkit-scrollbar-thumb:hover {
+  background: #94a3b8;
+}
+
+@keyframes dropdownSlide {
+  from {
+    opacity: 0;
+    transform: translateY(-6px) scale(0.99);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+.animate-dropdown-slide {
+  animation: dropdownSlide 0.18s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+@keyframes heroRise {
+  from {
+    opacity: 0;
+    transform: translateY(14px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes heroFloat {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-4px);
+  }
+}
+
+.hero-reveal {
+  animation: heroRise 600ms cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+
+.hero-reveal-delay {
+  animation-delay: 120ms;
+}
+
+.hero-float {
+  animation: heroFloat 5s ease-in-out infinite;
+}
+
+.hero-float-delay {
+  animation-delay: 900ms;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: scale(0.95);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+.animate-fadeIn {
+  animation: fadeIn 0.15s ease-out forwards;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .hero-reveal,
+  .hero-float {
+    animation: none;
+  }
+}

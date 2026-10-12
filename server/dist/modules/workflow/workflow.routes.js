@@ -1,0 +1,17 @@
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+const express_1 = require("express");
+const workflow_controller_js_1 = require("./workflow.controller.js");
+const auth_js_1 = require("../../middleware/auth.js");
+const rbac_js_1 = require("../../middleware/rbac.js");
+const router = (0, express_1.Router)();
+router.use(auth_js_1.authenticate);
+router.get('/', workflow_controller_js_1.getWorkflows);
+router.post('/', (0, rbac_js_1.requireRole)(['PLATFORM_SUPER_ADMIN', 'ORG_ADMIN', 'HR_DIRECTOR']), workflow_controller_js_1.upsertWorkflow);
+router.get('/requests', workflow_controller_js_1.getApprovalRequests);
+router.post('/requests', workflow_controller_js_1.submitApprovalRequest);
+router.post('/requests/:id/act', workflow_controller_js_1.actOnApprovalRequest);
+router.get('/delegations', workflow_controller_js_1.getDelegations);
+router.post('/delegations', workflow_controller_js_1.createDelegation);
+router.delete('/delegations/:id', workflow_controller_js_1.revokeDelegation);
+exports.default = router;

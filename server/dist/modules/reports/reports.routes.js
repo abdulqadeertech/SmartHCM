@@ -1,0 +1,15 @@
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+const express_1 = require("express");
+const reports_controller_js_1 = require("./reports.controller.js");
+const auth_js_1 = require("../../middleware/auth.js");
+const router = (0, express_1.Router)();
+router.use(auth_js_1.authenticate);
+router.get('/summary', reports_controller_js_1.getDashboardSummary);
+router.get('/attendance-trends', reports_controller_js_1.getAttendanceTrends);
+router.get('/advanced', reports_controller_js_1.getAdvancedAnalytics);
+router.get('/saved', reports_controller_js_1.getSavedReports);
+router.post('/saved', reports_controller_js_1.createSavedReport);
+router.delete('/saved/:id', reports_controller_js_1.deleteSavedReport);
+router.post('/ai-query', reports_controller_js_1.queryAiAssistant);
+exports.default = router;

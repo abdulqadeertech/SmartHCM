@@ -1,0 +1,20 @@
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+const express_1 = require("express");
+const attendance_controller_js_1 = require("./attendance.controller.js");
+const auth_js_1 = require("../../middleware/auth.js");
+const rbac_js_1 = require("../../middleware/rbac.js");
+const router = (0, express_1.Router)();
+router.use(auth_js_1.authenticate);
+router.get('/', attendance_controller_js_1.getAttendanceRecords);
+router.get('/today', attendance_controller_js_1.getTodayAttendance);
+router.post('/clock-in', attendance_controller_js_1.clockIn);
+router.post('/clock-out', attendance_controller_js_1.clockOut);
+router.post('/corrections', attendance_controller_js_1.requestCorrection);
+router.get('/corrections', attendance_controller_js_1.getCorrections);
+router.patch('/corrections/:id/review', (0, rbac_js_1.requireRole)(['HR_DIRECTOR', 'HR_MANAGER', 'DEPT_MANAGER']), attendance_controller_js_1.reviewCorrection);
+// Overtime Management Workflow
+router.post('/overtime', attendance_controller_js_1.requestOvertime);
+router.get('/overtime', attendance_controller_js_1.getOvertimeRequests);
+router.patch('/overtime/:id/review', (0, rbac_js_1.requireRole)(['HR_DIRECTOR', 'HR_MANAGER', 'DEPT_MANAGER', 'ORG_ADMIN']), attendance_controller_js_1.reviewOvertimeRequest);
+exports.default = router;

@@ -1,0 +1,12 @@
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+const express_1 = require("express");
+const performance_controller_js_1 = require("./performance.controller.js");
+const auth_js_1 = require("../../middleware/auth.js");
+const router = (0, express_1.Router)();
+router.use(auth_js_1.authenticate);
+router.get('/cycles', performance_controller_js_1.getReviewCycles);
+router.get('/goals', performance_controller_js_1.getGoals);
+router.post('/goals', performance_controller_js_1.createGoal);
+router.patch('/goals/:id', performance_controller_js_1.updateGoalProgress);
+exports.default = router;

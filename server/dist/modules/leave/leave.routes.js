@@ -1,0 +1,14 @@
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+const express_1 = require("express");
+const leave_controller_js_1 = require("./leave.controller.js");
+const auth_js_1 = require("../../middleware/auth.js");
+const rbac_js_1 = require("../../middleware/rbac.js");
+const router = (0, express_1.Router)();
+router.use(auth_js_1.authenticate);
+router.get('/types', leave_controller_js_1.getLeaveTypes);
+router.get('/balances', leave_controller_js_1.getLeaveBalances);
+router.get('/requests', leave_controller_js_1.getLeaveRequests);
+router.post('/requests', leave_controller_js_1.submitLeaveRequest);
+router.patch('/requests/:id/review', (0, rbac_js_1.requireRole)(['HR_DIRECTOR', 'HR_MANAGER', 'DEPT_MANAGER']), leave_controller_js_1.reviewLeaveRequest);
+exports.default = router;

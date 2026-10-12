@@ -1,0 +1,14 @@
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+const express_1 = require("express");
+const recruitment_controller_js_1 = require("./recruitment.controller.js");
+const auth_js_1 = require("../../middleware/auth.js");
+const rbac_js_1 = require("../../middleware/rbac.js");
+const router = (0, express_1.Router)();
+router.use(auth_js_1.authenticate);
+router.get('/jobs', recruitment_controller_js_1.getJobRequisitions);
+router.post('/jobs', (0, rbac_js_1.requireRole)(['HR_DIRECTOR', 'HR_MANAGER', 'RECRUITER']), recruitment_controller_js_1.createJobRequisition);
+router.get('/candidates', recruitment_controller_js_1.getCandidates);
+router.post('/candidates', (0, rbac_js_1.requireRole)(['HR_DIRECTOR', 'HR_MANAGER', 'RECRUITER']), recruitment_controller_js_1.createCandidate);
+router.patch('/candidates/:id/stage', (0, rbac_js_1.requireRole)(['HR_DIRECTOR', 'HR_MANAGER', 'RECRUITER']), recruitment_controller_js_1.updateCandidateStage);
+exports.default = router;

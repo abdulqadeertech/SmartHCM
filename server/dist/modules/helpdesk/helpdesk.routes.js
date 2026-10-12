@@ -1,0 +1,12 @@
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+const express_1 = require("express");
+const helpdesk_controller_js_1 = require("./helpdesk.controller.js");
+const auth_js_1 = require("../../middleware/auth.js");
+const router = (0, express_1.Router)();
+router.use(auth_js_1.authenticate);
+router.get('/tickets', helpdesk_controller_js_1.getTickets);
+router.post('/tickets', helpdesk_controller_js_1.createTicket);
+router.patch('/tickets/:id', helpdesk_controller_js_1.updateTicket);
+router.post('/tickets/:id/comments', helpdesk_controller_js_1.addComment);
+exports.default = router;
